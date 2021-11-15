@@ -29,6 +29,23 @@ class FizzBuzzTest extends TestCase
     $this->assertEquals($resultadoEsperado, $resultado);
   }
 
+  public function testLaCuentaEsCeroSiNadieHaDichoNumero()
+  {
+    $fizzbuzz = new FizzBuzz();
+
+    $this->assertEquals(0, $fizzbuzz->dimeLaCuenta());
+  }
+
+  public function testLaCuentaSeIncrementaCuandoDecimosNumeros()
+  {
+    $fizzbuzz = new FizzBuzz();
+
+    $fizzbuzz->diNumero(1);
+    $fizzbuzz->diNumero(2);
+
+    $this->assertEquals(2, $fizzbuzz->dimeLaCuenta());
+  }
+
 }
 
 ?>
