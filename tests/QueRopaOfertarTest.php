@@ -48,4 +48,19 @@ class QueRopaOfertarTest extends TestCase
 
     $this->assertEquals('Camisas', $ropa);
   }
+
+  public function testCompruebaElTiempoEnLaCiudadIndicada()
+  {
+    $ciudad = 'Alicante';
+    $numeroAleatorio = 56;
+    $tiempoApi = $this->getMockBuilder(TiempoApi::class)->getMock();
+    $tiempoApi->expects($this->once())
+      ->method('queTemperaturaHaceEn')
+      ->with($ciudad)
+      ->willReturn($numeroAleatorio);
+
+    $queRopaOfertar = new QueRopaOfertar($tiempoApi);
+
+    $queRopaOfertar->determina('Alicante');
+  }
 }
