@@ -8,10 +8,11 @@ class QueRopaOfertarTest extends TestCase
 {
   public function testDeterminaCamisetasCuandoHaceMasDe18Grados()
   {
-    $tiempoApi = new TiempoApi();
-
-    // $tiempoApi = $this->getMockBuilder(TiempoApi::class)->getMock();
-    // $tiempoApi->expects()
+    // $tiempoApi = new TiempoApi();
+    $tiempoApi = $this->getMockBuilder(TiempoApi::class)->getMock();
+    $tiempoApi->expects($this->once())
+      ->method('queTemperaturaHaceEn')
+      ->willReturn(20);
 
     $queRopaOfertar = new QueRopaOfertar($tiempoApi);
 
@@ -22,7 +23,11 @@ class QueRopaOfertarTest extends TestCase
 
   public function testDeterminaAbrigosCuandoHaceMenosDe10Grados()
   {
-    $tiempoApi = new TiempoApi();
+    $tiempoApi = $this->getMockBuilder(TiempoApi::class)->getMock();
+    $tiempoApi->expects($this->once())
+      ->method('queTemperaturaHaceEn')
+      ->willReturn(5);
+
     $queRopaOfertar = new QueRopaOfertar($tiempoApi);
 
     $ropa = $queRopaOfertar->determina('Alicante');
@@ -32,7 +37,11 @@ class QueRopaOfertarTest extends TestCase
 
   public function testDeterminaCamisasCuandoHaceEntre10y18Grados()
   {
-    $tiempoApi = new TiempoApi();
+    $tiempoApi = $this->getMockBuilder(TiempoApi::class)->getMock();
+    $tiempoApi->expects($this->once())
+      ->method('queTemperaturaHaceEn')
+      ->willReturn(15);
+
     $queRopaOfertar = new QueRopaOfertar($tiempoApi);
 
     $ropa = $queRopaOfertar->determina('Alicante');

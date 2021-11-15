@@ -20,7 +20,7 @@ class QueRopaOfertar
       $categoria = 'Camisetas';
     }
 
-    if ($temperatura > 10) {
+    if ($temperatura < 10) {
       $categoria = 'Abrigos';
     }
 
