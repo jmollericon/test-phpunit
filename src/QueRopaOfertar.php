@@ -13,6 +13,10 @@ class QueRopaOfertar
 
   public function determina(string $city)
   {
+    if ($city === '') {
+      throw new \Exception('Se te ha olvidado la ciudad');
+    }
+
     $temperatura = $this->api->queTemperaturaHaceEn($city);
     $categoria = 'Camisas';
 

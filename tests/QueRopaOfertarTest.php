@@ -6,45 +6,46 @@ use PHPUnit\Framework\TestCase;
 
 class QueRopaOfertarTest extends TestCase
 {
+  private TiempoApi $tiempoApi;
+  private QueRopaOfertar $queRopaOfertar;
+
+  public function setUp(): void
+  {
+    parent::setUp();
+    $this->tiempoApi = $this->getMockBuilder(TiempoApi::class)->getMock();
+    $this->queRopaOfertar = new QueRopaOfertar($this->tiempoApi);
+  }
+
   public function testDeterminaCamisetasCuandoHaceMasDe18Grados()
   {
     // $tiempoApi = new TiempoApi();
-    $tiempoApi = $this->getMockBuilder(TiempoApi::class)->getMock();
-    $tiempoApi->expects($this->once())
+    $this->tiempoApi->expects($this->once())
       ->method('queTemperaturaHaceEn')
       ->willReturn(20);
 
-    $queRopaOfertar = new QueRopaOfertar($tiempoApi);
-
-    $ropa = $queRopaOfertar->determina('Alicante');
+    $ropa = $this->queRopaOfertar->determina('Alicante');
 
     $this->assertEquals('Camisetas', $ropa);
   }
 
   public function testDeterminaAbrigosCuandoHaceMenosDe10Grados()
   {
-    $tiempoApi = $this->getMockBuilder(TiempoApi::class)->getMock();
-    $tiempoApi->expects($this->once())
+    $this->tiempoApi->expects($this->once())
       ->method('queTemperaturaHaceEn')
       ->willReturn(5);
 
-    $queRopaOfertar = new QueRopaOfertar($tiempoApi);
-
-    $ropa = $queRopaOfertar->determina('Alicante');
+    $ropa = $this->queRopaOfertar->determina('Alicante');
 
     $this->assertEquals('Abrigos', $ropa);
   }
 
   public function testDeterminaCamisasCuandoHaceEntre10y18Grados()
   {
-    $tiempoApi = $this->getMockBuilder(TiempoApi::class)->getMock();
-    $tiempoApi->expects($this->once())
+    $this->tiempoApi->expects($this->once())
       ->method('queTemperaturaHaceEn')
       ->willReturn(15);
 
-    $queRopaOfertar = new QueRopaOfertar($tiempoApi);
-
-    $ropa = $queRopaOfertar->determina('Alicante');
+    $ropa = $this->queRopaOfertar->determina('Alicante');
 
     $this->assertEquals('Camisas', $ropa);
   }
@@ -53,14 +54,18 @@ class QueRopaOfertarTest extends TestCase
   {
     $ciudad = 'Alicante';
     $numeroAleatorio = 56;
-    $tiempoApi = $this->getMockBuilder(TiempoApi::class)->getMock();
-    $tiempoApi->expects($this->once())
+    $this->tiempoApi->expects($this->once())
       ->method('queTemperaturaHaceEn')
       ->with($ciudad)
       ->willReturn($numeroAleatorio);
 
-    $queRopaOfertar = new QueRopaOfertar($tiempoApi);
+    $this->queRopaOfertar->determina('Alicante');
+  }
 
-    $queRopaOfertar->determina('Alicante');
+  public function testLanzaUnaExcepcionSiLaCiudadEstaVacia()
+  {
+    $this->expectException(\exception::class);
+
+    $this->queRopaOfertar->determina('');
   }
 }
