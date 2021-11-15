@@ -7,40 +7,26 @@ use PHPUnit\Framework\TestCase;
 
 class FizzBuzzTest extends TestCase
 {
-  public function testCuandoLeDoyNumeroTresRetornaFizz() : void
+  public function casosDeUso() : array
   {
-    $fizzbuzz = new FizzBuzz();
-
-    $resultado = $fizzbuzz->diNumero(3);
-
-    $this->assertEquals('Fizz', $resultado);
+    return [
+      [3, 'Fizz'],
+      [5, 'Buzz'],
+      [15, 'FizzBuzz'],
+      [1, 1]
+    ];
   }
 
-  public function testCuandoLeDoyNumeroCincoRetornaBuzz() : void
+  /**
+   * @dataProvider casosDeUso
+   */
+  public function testFizzBuzz($numeroATestear, $resultadoEsperado)
   {
     $fizzbuzz = new FizzBuzz();
 
-    $resultado = $fizzbuzz->diNumero(5);
+    $resultado = $fizzbuzz->diNumero($numeroATestear);
 
-    $this->assertEquals('Buzz', $resultado);
-  }
-
-  public function testCuandoLeDoyNumeroQuinceRetornaFizzBuzz() : void
-  {
-    $fizzbuzz = new FizzBuzz();
-
-    $resultado = $fizzbuzz->diNumero(15);
-
-    $this->assertEquals('FizzBuzz', $resultado);
-  }
-
-  public function testCuandoLeDoyNumeroUnoRetornaUno() : void
-  {
-    $fizzbuzz = new FizzBuzz();
-
-    $resultado = $fizzbuzz->diNumero(1);
-
-    $this->assertEquals(1, $resultado);
+    $this->assertEquals($resultadoEsperado, $resultado);
   }
 
 }
